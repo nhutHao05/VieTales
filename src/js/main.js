@@ -2,13 +2,7 @@
    Main Entry Point - VieTales
    ============================================ */
 
-// Import styles
-import '../styles/variables.css';
-import '../styles/base.css';
-import '../styles/components.css';
-import '../styles/animations.css';
-import '../styles/pages.css';
-import '../styles/responsive.css';
+
 
 // Import modules
 import { initNavigation } from './navigation.js';
