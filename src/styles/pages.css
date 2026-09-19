@@ -225,8 +225,20 @@
 
 /* === ABOUT / MISSION SECTION === */
 .about-section {
-  background: var(--color-white);
   position: relative;
+  background-image: url('/images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: 1;
+}
+
+.about-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.88); /* Lớp phủ trắng mờ để dễ đọc chữ */
+  z-index: -1;
 }
 
 .about-grid {
