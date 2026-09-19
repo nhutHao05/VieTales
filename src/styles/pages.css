@@ -517,64 +517,64 @@
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: var(--space-lg);
-  max-width: 950px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-md);
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .team-card {
-  text-align: center;
-  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
   background: var(--color-white);
   border-radius: var(--radius-lg);
+  text-align: left;
 }
 
 .team-avatar {
-  width: 110px;
-  height: 110px;
-  margin: 0 auto var(--space-md);
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
   border-radius: var(--radius-full);
-  overflow: hidden;
-  border: 3px solid var(--color-primary-soft);
-  transition: var(--transition-spring);
-  position: relative;
-}
-
-.team-card:hover .team-avatar {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-glow-primary);
-  transform: scale(1.06);
-}
-
-.team-avatar-placeholder {
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--gradient-subtle);
-  font-size: 2.5rem;
+  border: 2px solid var(--color-primary-soft);
+  transition: var(--transition-spring);
 }
 
-.team-card h3 {
+.team-avatar .initials {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+}
+
+.team-card:hover .team-avatar {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  transform: scale(1.08);
+}
+
+.team-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-info h3 {
   font-size: 1.05rem;
   font-weight: var(--fw-semibold);
   color: var(--color-text);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
 }
 
 .team-role {
   font-size: var(--fs-small);
-  color: var(--color-primary);
+  color: var(--color-primary-light);
   font-weight: var(--fw-medium);
-  margin-bottom: var(--space-xs);
-}
-
-.team-card p.team-bio {
-  font-size: var(--fs-small);
-  color: var(--color-text-muted);
-  line-height: 1.7;
 }
 
 /* === FOOTER === */
