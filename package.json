@@ -1,0 +1,15 @@
+{
+  "name": "vietales-landing",
+  "private": true,
+  "version": "1.0.0",
+  "description": "VieTales - Kể Chuyện Việt Nam Qua Từng Tấm Bưu Thiếp",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

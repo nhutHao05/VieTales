@@ -1,0 +1,113 @@
+/* ============================================
+   VieTales Design System - LIGHT THEME
+   Tươi sáng, chuyên nghiệp, premium
+   ============================================ */
+
+:root {
+  /* === Colors - Light & Vibrant === */
+  --color-primary: #D32F2F;           /* Đỏ VieTales - từ logo */
+  --color-primary-dark: #B71C1C;
+  --color-primary-light: #EF5350;
+  --color-primary-soft: rgba(211,47,47,0.08);
+  
+  --color-secondary: #C8903E;         /* Vàng đồng ấm */
+  --color-secondary-dark: #A67631;
+  --color-secondary-light: #E8B86D;
+  --color-secondary-soft: rgba(200,144,62,0.08);
+  
+  --color-accent: #2E7D32;            /* Xanh lá tươi */
+  --color-accent-light: #4CAF50;
+  --color-accent-soft: rgba(46,125,50,0.08);
+  
+  /* === Neutrals === */
+  --color-white: #FFFFFF;
+  --color-bg: #FAFAFA;
+  --color-bg-warm: #FFF9F0;
+  --color-bg-section: #F5F0E8;
+  --color-bg-card: #FFFFFF;
+  
+  --color-dark: #1A1A2E;
+  --color-text: #2D2D3A;
+  --color-text-secondary: #5A5A6E;
+  --color-text-muted: #8E8E9E;
+  --color-text-light: #FFFFFF;
+  --color-border: rgba(0,0,0,0.06);
+  --color-border-hover: rgba(211,47,47,0.2);
+  
+  /* === Gradients === */
+  --gradient-hero: linear-gradient(135deg, #FFF9F0 0%, #FFF5EB 50%, #FFF0E0 100%);
+  --gradient-primary: linear-gradient(135deg, #D32F2F, #EF5350);
+  --gradient-gold: linear-gradient(135deg, #C8903E, #E8B86D);
+  --gradient-warm: linear-gradient(180deg, #FAFAFA, #FFF9F0);
+  --gradient-section: linear-gradient(180deg, #FFFFFF, #F5F0E8);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4));
+  --gradient-card: linear-gradient(145deg, #FFFFFF, #FFF9F0);
+  --gradient-subtle: linear-gradient(135deg, rgba(211,47,47,0.03), rgba(200,144,62,0.03));
+  
+  /* === Typography === */
+  --font-primary: 'Be Vietnam Pro', 'Segoe UI', sans-serif;
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  
+  --fs-hero: clamp(2.5rem, 6vw, 4.5rem);
+  --fs-h1: clamp(2rem, 4vw, 3.5rem);
+  --fs-h2: clamp(1.5rem, 3vw, 2.5rem);
+  --fs-h3: clamp(1.2rem, 2vw, 1.5rem);
+  --fs-body: clamp(0.95rem, 1.2vw, 1.05rem);
+  --fs-small: clamp(0.8rem, 1vw, 0.9rem);
+  --fs-caption: 0.75rem;
+  
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  
+  --line-height: 1.75;
+  --letter-spacing: 0.01em;
+  
+  /* === Spacing === */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 8rem;
+  
+  /* === Layout === */
+  --max-width: 1200px;
+  --container-padding: clamp(1.25rem, 5vw, 2.5rem);
+  
+  /* === Borders & Radius === */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 40px;
+  --radius-full: 50%;
+  
+  /* === Shadows (soft, warm) === */
+  --shadow-xs: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.1);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.12);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.06);
+  --shadow-card-hover: 0 12px 40px rgba(211,47,47,0.12);
+  --shadow-glow-primary: 0 4px 20px rgba(211,47,47,0.25);
+  --shadow-glow-gold: 0 4px 20px rgba(200,144,62,0.2);
+  
+  /* === Transitions === */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-spring: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  /* === Z-index === */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
