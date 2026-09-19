@@ -15,6 +15,7 @@ const locations = [
     region: 'Quảng Ninh',
     description: 'Di sản thiên nhiên thế giới UNESCO với hàng nghìn hòn đảo đá vôi hùng vĩ, gắn liền với truyền thuyết Rồng phun ngọc.',
     image: '/images/halong-bay.jpg',
+    url: '/locations/halong.html',
     status: 'available',
   },
   {
@@ -22,6 +23,7 @@ const locations = [
     region: 'Quảng Nam',
     description: 'Đô thị cổ với đèn lồng lung linh bên sông Thu Bồn, nơi giao thoa văn hóa Đông - Tây qua nhiều thế kỷ.',
     image: '/images/hoi-an.jpg',
+    url: '/locations/hoi-an.html',
     status: 'available',
   },
   {
@@ -29,6 +31,7 @@ const locations = [
     region: 'Hà Nội',
     description: 'Trường đại học đầu tiên của Việt Nam, biểu tượng cho truyền thống hiếu học ngàn năm văn hiến.',
     image: '/images/van-mieu.jpg',
+    url: '/locations/van-mieu.html',
     status: 'available',
   },
 ];
@@ -53,7 +56,7 @@ function initLocationCards() {
   grid.innerHTML = locations
     .map(
       (loc, i) => `
-    <div class="location-card reveal-scale delay-${i + 1}" id="location-${i}">
+    <a href="${loc.url}" class="location-card reveal-scale delay-${i + 1}" id="location-${i}" style="display: block; text-decoration: none;">
       <img class="location-card-image" src="${loc.image}" alt="${loc.name}" loading="lazy" />
       <div class="location-card-overlay">
         <div class="location-card-content">
@@ -63,7 +66,7 @@ function initLocationCards() {
         </div>
       </div>
       ${loc.status === 'coming-soon' ? '<span class="badge badge-red location-badge">Sắp Ra Mắt</span>' : ''}
-    </div>
+    </a>
   `
     )
     .join('');

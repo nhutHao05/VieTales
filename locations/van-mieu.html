@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Truyền thuyết Văn Miếu - VieTales</title>
+  
+  <link rel="icon" type="image/png" href="/images/Logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <link rel="stylesheet" href="/src/styles/main.css">
+  
+  <style>
+    .story-hero {
+      position: relative;
+      height: 60vh;
+      min-height: 400px;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: var(--space-2xl);
+    }
+    
+    .story-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    
+    .story-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .story-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
+    }
+    
+    .story-header {
+      position: relative;
+      z-index: 1;
+      color: var(--color-white);
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      width: 100%;
+    }
+    
+    .story-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-h1);
+      margin-bottom: var(--space-sm);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+    
+    .story-meta {
+      font-size: var(--fs-small);
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    
+    .story-content {
+      background: var(--color-white);
+      padding: var(--space-3xl) 0;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .story-text {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 2;
+      color: var(--color-text);
+    }
+    
+    .story-text p {
+      margin-bottom: var(--space-md);
+    }
+    
+    .story-text p:first-child::first-letter {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      float: left;
+      line-height: 1;
+      padding-right: 0.5rem;
+      color: var(--color-primary);
+    }
+    
+    .back-nav {
+      position: absolute;
+      top: var(--space-md);
+      left: var(--space-md);
+      z-index: 10;
+    }
+    
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: var(--color-white);
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-xl);
+      font-weight: var(--fw-medium);
+      font-size: var(--fs-small);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: var(--transition-base);
+    }
+    
+    .back-btn:hover {
+      background: var(--color-white);
+      color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== BACK NAVIGATION ========== -->
+  <div class="back-nav">
+    <a href="/" class="back-btn">
+      <span>←</span> Trở Về Trang Chủ
+    </a>
+  </div>
+
+  <!-- ========== STORY HERO ========== -->
+  <section class="story-hero">
+    <div class="story-hero-bg">
+      <img src="/images/van-mieu.jpg" alt="Văn Miếu Quốc Tử Giám" />
+      <div class="story-hero-overlay"></div>
+    </div>
+    
+    <div class="container story-header reveal">
+      <div class="badge badge-red" style="margin-bottom: 1rem;">Di Tích Quốc Gia</div>
+      <h1 class="story-title">Tinh Hoa Đạo Học Đất Việt</h1>
+      <div class="story-meta">Văn Miếu - Quốc Tử Giám, Hà Nội</div>
+    </div>
+  </section>
+
+  <!-- ========== STORY CONTENT ========== -->
+  <section class="story-content">
+    <div class="container">
+      <div class="story-text reveal">
+        <p>
+          Trường đại học đầu tiên của Việt Nam không chỉ là nơi lưu giữ những tấm bia đá khắc tên các vị tiến sĩ, mà còn là biểu tượng bất diệt cho truyền thống tôn sư trọng đạo và tinh thần hiếu học của dân tộc.
+        </p>
+        <p>
+          Được xây dựng từ năm 1070 dưới triều vua Lý Thánh Tông, Văn Miếu ban đầu là nơi thờ Khổng Tử và các bậc hiền triết Nho giáo. Đến năm 1076, vua Lý Nhân Tông cho lập Quốc Tử Giám ở kề bên, mở ra một trang sử mới cho nền giáo dục nước nhà. Từ một trường học dành riêng cho con em hoàng tộc, Quốc Tử Giám dần mở rộng cửa đón nhận những người tài giỏi trong dân gian.
+        </p>
+        <p>
+          Đặc biệt nhất là vườn bia Tiến sĩ với 82 tấm bia đá đặt trên lưng rùa linh thiêng. Rùa là biểu tượng của sự trường tồn và trí tuệ. Theo truyền thuyết, những học sĩ ngày xưa trước khi vào kỳ thi Đình thường đến đây vuốt đầu rùa để cầu mong may mắn và sự thông tuệ. Bia đá không chỉ ghi danh người đỗ đạt mà còn nhắc nhở muôn đời về đạo lý: "Hiền tài là nguyên khí của quốc gia".
+        </p>
+        <p>
+          Mỗi mùa thi đến, Khuê Văn Các - biểu tượng của sao Khuê rực sáng - lại chứng kiến hàng ngàn sĩ tử về đây thắp hương cầu nguyện, tiếp nối mạch nguồn văn hóa ngàn năm chưa bao giờ đứt đoạn.
+        </p>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+          <img src="/images/Logo.png" alt="VieTales" style="width: 80px; margin: 0 auto; opacity: 0.3;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" style="padding: 2rem 0; text-align: center;">
+    <p style="color: rgba(255,255,255,0.5); font-size: var(--fs-small);">
+      © 2026 VieTales. Quét mã QR để nghe thêm nhiều câu chuyện.
+    </p>
+  </footer>
+
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>
