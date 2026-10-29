@@ -94,7 +94,8 @@
   z-index: var(--z-base);
   text-align: center;
   padding: var(--space-xl) var(--container-padding);
-  max-width: 800px;
+  /* rộng hơn 800px để tagline 2 dòng không bị ngắt thành 3 dòng */
+  max-width: 1000px;
 }
 
 .hero-logo {
@@ -112,11 +113,13 @@
 
 .hero-tagline {
   font-family: var(--font-display);
-  font-size: var(--fs-hero);
+  /* nhỏ hơn --fs-hero một chút: câu mới dài hơn câu cũ nên cần chỗ thở */
+  font-size: clamp(2rem, 5vw, 3.75rem);
   font-weight: var(--fw-bold);
   color: var(--color-text);
   margin-bottom: var(--space-md);
-  line-height: 1.15;
+  line-height: 1.18;
+  text-wrap: balance;
   animation: fadeInUp 1s ease 0.4s both;
 }
 
@@ -299,18 +302,26 @@
   justify-content: center;
   background: var(--color-primary-soft);
   border-radius: var(--radius-md);
-  font-size: 1.6rem;
+  color: var(--color-primary);
   transition: var(--transition-spring);
+}
+
+.value-icon svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .value-card:hover .value-icon {
   background: var(--gradient-primary);
-  transform: scale(1.1) rotate(5deg);
+  color: var(--color-white);
+  transform: translateY(-2px) scale(1.06);
   box-shadow: var(--shadow-glow-primary);
 }
 
-.value-card:hover .value-icon-emoji {
-  filter: brightness(0) invert(1);
+.value-card:hover .value-icon svg {
+  transform: scale(1.05);
 }
 
 .value-card h3 {
@@ -385,9 +396,22 @@
 }
 
 .step-icon {
-  font-size: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: var(--space-sm);
+  color: var(--color-primary);
+}
+
+.step-icon svg {
+  width: 34px;
+  height: 34px;
   display: block;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.step-card:hover .step-icon svg {
+  transform: translateY(-3px);
 }
 
 .step-card h3 {
@@ -426,21 +450,444 @@
   gap: var(--space-md);
 }
 
+/* === MÔ HÌNH BƯU THIẾP 3D (hero) === */
+.postcard3d {
+  margin-top: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.postcard3d-stage {
+  width: 100%;
+  max-width: 680px;
+  height: 380px;
+  cursor: grab;
+}
+
+.postcard3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+
+.postcard3d-stage:active {
+  cursor: grabbing;
+}
+
+.postcard3d-hint {
+  font-size: var(--fs-caption);
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+}
+
+.postcard3d-failed .postcard3d-stage {
+  display: none;
+}
+
+/* === BẢN ĐỒ 3D VIỆT NAM === */
+.map3d-block {
+  margin-bottom: var(--space-xl);
+}
+
+.map3d-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: radial-gradient(circle at 30% 20%, #14314d 0%, #0a1a2b 55%, #071320 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-xl);
+}
+
+.map3d-stage {
+  position: relative;
+  height: 580px;
+  touch-action: pan-y;
+}
+
+.map3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.map3d-canvas:active {
+  cursor: grabbing;
+}
+
+/* Lớp phủ chữ — không chặn chuột để vẫn xoay được bản đồ */
+.map3d-overlay {
+  position: absolute;
+  top: var(--space-lg);
+  left: var(--space-lg);
+  max-width: 330px;
+  pointer-events: none;
+}
+
+.map3d-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffd9a0;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+
+.map3d-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  color: #fff;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.map3d-note {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: var(--fs-small);
+  line-height: 1.7;
+}
+
+.map3d-disclaimer {
+  margin-top: 0.5rem;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.7rem;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.map3d-zoom {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-family: inherit;
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.map3d-zoom:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.map3d-zoom:active {
+  transform: scale(0.96);
+}
+
+.map3d-legend {
+  position: absolute;
+  bottom: var(--space-lg);
+  left: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: rgba(7, 19, 32, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--fs-caption);
+  pointer-events: none;
+}
+
+.map3d-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-light);
+  box-shadow: 0 0 0 4px rgba(239, 83, 80, 0.25);
+}
+
+.map3d-hint {
+  position: absolute;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: rgba(7, 19, 32, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.55);
+  font-size: var(--fs-caption);
+  pointer-events: none;
+}
+
+/* Khi WebGL không chạy được thì vẫn còn chữ để đọc */
+.map3d-failed .map3d-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 40%, #14314d 0%, #071320 100%);
+}
+
+.map3d-failed .map3d-stage::after {
+  content: 'Trình duyệt của bạn không hỗ trợ WebGL — bản đồ 3D không hiển thị được.';
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--fs-small);
+  text-align: center;
+  padding: 0 var(--space-lg);
+  max-width: 420px;
+}
+
+/* === THẺ BƯU THIẾP LẬT 3D === */
+.flip-card {
+  perspective: 1400px;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.flip-card.is-flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+/* Mặt trước: ảnh postcard */
+.flip-front {
+  background: var(--color-bg-section);
+}
+
+.flip-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.flip-front-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2.2rem var(--space-md) var(--space-md);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0));
+  color: #fff;
+}
+
+.flip-front-label h3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+  margin-bottom: 0.2rem;
+}
+
+.flip-front-label span {
+  font-size: var(--fs-caption);
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.06em;
+}
+
+.flip-flip-hint {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-text);
+  font-size: 0.68rem;
+  font-weight: var(--fw-medium);
+}
+
+/* Mặt sau: lời kể ngắn trên nền giấy */
+.flip-back {
+  transform: rotateY(180deg);
+  background: var(--color-bg-warm);
+  border: 2px solid var(--color-primary);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.flip-back-tag {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.flip-back h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.flip-back p {
+  font-size: var(--fs-small);
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+}
+
+.flip-back-meta {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.flip-back-meta span {
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-hover);
+  font-size: 0.68rem;
+  color: var(--color-text-secondary);
+}
+
+.flip-back-link {
+  margin-top: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-primary);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-small);
+}
+
+.flip-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+/* Tôn trọng người bật giảm chuyển động: hiện mặt sau luôn, không lật */
+@media (prefers-reduced-motion: reduce) {
+  .flip-card-inner {
+    transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .map3d-stage {
+    height: 400px;
+  }
+
+  .map3d-overlay {
+    top: var(--space-md);
+    left: var(--space-md);
+    right: var(--space-md);
+    max-width: none;
+  }
+
+  .map3d-hint {
+    display: none;
+  }
+}
+
 .location-card {
   display: block;
   position: relative;
   border-radius: var(--radius-lg);
-  overflow: hidden;
   background: var(--color-white);
   border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-card);
-  transition: var(--transition-base);
+  /* Bóng đổ dựng bằng biến để JS dịch chuyển theo hướng nghiêng.
+     Bóng luôn đổ ngược hướng card nghiêng -> cảm giác card thật sự nhấc lên. */
+  box-shadow:
+    var(--sh-x, 0px) var(--sh-y, 6px) var(--sh-blur, 26px) rgba(0, 0, 0, 0.10),
+    var(--sh-x, 0px) calc(var(--sh-y, 6px) / 2) calc(var(--sh-blur, 26px) / 3) rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color var(--transition-base);
+}
+
+/* Lớp riêng cho hiệu ứng 3D.
+   Không gộp vào .location-card vì .reveal-scale cũng đặt transform trên cùng
+   phần tử — hai nguồn transform sẽ ghi đè lẫn nhau và làm mất hiệu ứng. */
+.location-card-3d {
+  position: relative;
+  z-index: 0;
+  --perspective: 820;
+  transform-style: preserve-3d;
+  transform:
+    perspective(calc(var(--perspective) * 1px))
+    rotateX(var(--rx, 0deg))
+    rotateY(var(--ry, 0deg))
+    translateY(var(--ty, 0px));
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* Khi con trỏ đang di chuyển: phản hồi gần như tức thì để không bị trễ tay */
+.location-card-3d.is-tilting {
+  transition: transform 0.09s linear;
 }
 
 .location-card:hover {
-  box-shadow: var(--shadow-xl);
-  transform: translateY(-6px);
   border-color: var(--color-border-hover);
+}
+
+/* Card "hạ cánh" khi cuộn tới: dựng đứng rồi ngả phẳng xuống như tờ giấy đặt lên bàn.
+   Không dùng fill-mode forwards để trạng thái cuối nhường lại cho transform nền —
+   nếu giữ forwards thì animation sẽ đè mất hiệu ứng nghiêng khi hover. */
+.location-card.reveal-scale.active .location-card-3d {
+  animation: cardSettle 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes cardSettle {
+  from {
+    transform:
+      perspective(820px)
+      rotateX(-16deg)
+      translateY(38px)
+      scale(0.96);
+  }
+  to {
+    transform:
+      perspective(820px)
+      rotateX(0deg)
+      translateY(0)
+      scale(1);
+  }
 }
 
 /* Khung ảnh giữ đúng tỉ lệ postcard 3:2, không crop thiết kế */
@@ -448,7 +895,13 @@
   position: relative;
   aspect-ratio: 3 / 2;
   overflow: hidden;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   background: var(--color-bg-section);
+  /* Đẩy khối ảnh lên trước để card có chiều dày thật.
+     translateZ làm phép chiếu phóng to phần tử (z / perspective), nên phải
+     thu nhỏ lại đúng tỉ lệ đó — nếu không, góc vuông của khối ảnh sẽ lòi ra
+     ngoài góc bo của card. Công thức suy ra từ chính perspective ở trên. */
+  transform: translateZ(14px) scale(calc(1 - 14 / var(--perspective)));
 }
 
 .location-card-image {
@@ -459,11 +912,41 @@
 }
 
 .location-card:hover .location-card-image {
-  transform: scale(1.03);
+  transform: scale(1.04);
+}
+
+/* Vệt sáng chạy qua postcard khi nghiêng — giống ánh phản chiếu trên giấy bóng */
+.location-card-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 32%,
+    rgba(255, 255, 255, 0.34) 47%,
+    rgba(255, 255, 255, 0.10) 55%,
+    transparent 66%
+  );
+  transform: translateX(var(--shine, -130%));
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.location-card-3d.is-tilting .location-card-media::after {
+  transition: transform 0.16s linear;
 }
 
 .location-card-body {
   padding: var(--space-md);
+  /* Nhô lên khỏi mặt card -> tạo chiều sâu nhiều lớp khi nghiêng.
+     Bù lại độ phóng đại do phép chiếu, giống khối ảnh ở trên. */
+  transform: translateZ(8px) scale(calc(1 - 8 / var(--perspective)));
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.location-card:hover .location-card-body {
+  transform: translateZ(18px) scale(calc(1 - 18 / var(--perspective)));
 }
 
 .location-card-body .badge {
@@ -648,8 +1131,30 @@
   font-size: var(--fs-small);
 }
 
-.footer-contact-item span:first-child {
-  font-size: 1rem;
+.footer-contact-icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-primary-light);
+  transition: var(--transition-base);
+}
+
+.footer-contact-icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.footer-contact-item:hover .footer-contact-icon {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
 }
 
 .footer-social {

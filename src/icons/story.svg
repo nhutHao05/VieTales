@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Câu chuyện">
+  <!-- gáy sách -->
+  <path d="M16 10.5v14" />
+  <!-- trang trái -->
+  <path d="M16 10.5c-3-2-6.6-2.4-10.5-1.7v13.7c3.9-0.7 7.5-0.3 10.5 1.7" />
+  <!-- trang phải -->
+  <path d="M16 10.5c3-2 6.6-2.4 10.5-1.7v13.7c-3.9-0.7-7.5-0.3-10.5 1.7" />
+  <!-- dòng chữ trên trang -->
+  <path d="M9 14.5h4" />
+  <path d="M9 17.5h4" />
+  <path d="M9 20.5h2.5" />
+  <path d="M19 14.5h4" />
+  <path d="M19 17.5h4" />
+  <path d="M20.5 20.5h2.5" />
+</svg>

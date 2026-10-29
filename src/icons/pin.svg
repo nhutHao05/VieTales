@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Vị trí">
+  <!-- ghim bản đồ -->
+  <path d="M16 28.5c5.2-6.1 8-10.4 8-14a8 8 0 1 0-16 0c0 3.6 2.8 7.9 8 14z" />
+  <!-- lỗ ghim -->
+  <circle cx="16" cy="14.2" r="2.9" />
+</svg>

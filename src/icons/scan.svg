@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Quét mã QR">
+  <!-- thân điện thoại -->
+  <rect x="8" y="3" width="16" height="26" rx="3.5" />
+  <!-- loa thoại -->
+  <path d="M13.4 6.2h5.2" />
+  <!-- ba ô định vị của mã QR -->
+  <rect x="11.6" y="10.6" width="3.6" height="3.6" rx="0.7" />
+  <rect x="16.4" y="10.6" width="3.6" height="3.6" rx="0.7" />
+  <rect x="11.6" y="15.2" width="3.6" height="3.6" rx="0.7" />
+  <!-- ô dữ liệu -->
+  <path d="M16.6 15.4h3.2v3.2h-3.2z" fill="currentColor" stroke="none" />
+  <!-- vệt quét -->
+  <path d="M10.4 21.9h11.2" />
+</svg>

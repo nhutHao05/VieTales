@@ -28,6 +28,16 @@
   
   --color-dark: #1A1A2E;
   --color-text: #2D2D3A;
+
+  /* === Phong cách "giấy & băng dính" cho trang truyện ===
+     Mực nâu đậm thay cho đen tuyền, giấy ấm thay cho trắng tinh,
+     bóng cứng không blur — lấy từ web mẫu. */
+  --color-ink: #3A2E22;
+  --color-paper: #FDFBF4;
+  --color-tape: rgba(226, 200, 150, 0.72);
+  --shadow-hard: 4px 4px 0 0 var(--color-ink);
+  --shadow-hard-sm: 3px 3px 0 0 var(--color-ink);
+  --radius-paper: 22px;
   --color-text-secondary: #5A5A6E;
   --color-text-muted: #8E8E9E;
   --color-text-light: #FFFFFF;

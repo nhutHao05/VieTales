@@ -6,7 +6,11 @@
 
 // Import modules
 import { initNavigation } from './navigation.js';
-import { initScrollAnimations, initParallax } from './animations.js';
+import { initScrollAnimations, initParallax, initCardTilt } from './animations.js';
+/* Hai module Three.js bên dưới được nạp động (dynamic import) ở phần khởi tạo.
+   Lý do: three.js nặng ~600 kB nên nếu import tĩnh ở đây thì mọi lượt tải
+   trang đều phải chờ nó, kể cả khi WebGL không dùng được. Nạp động giúp
+   Vite tách thành chunk riêng và chỉ tải khi trang thật sự cần. */
 
 // === Location Data ===
 const locations = [
@@ -45,8 +49,49 @@ document.addEventListener('DOMContentLoaded', () => {
   initTypingEffect();
   initCounterAnimation();
 
-  console.log('🇻🇳 VieTales - Kể Chuyện Việt Nam Qua Từng Tấm Bưu Thiếp');
+  initThreeD();
+
+  console.log('🇻🇳 VieTales - Gửi Gắm Chuyện Việt Qua Từng Tấm Bưu Thiếp');
 });
+
+/* === Phần 3D (Three.js) ===
+   Nạp động: chunk three.js chỉ được tải khi trang có phần tử cần đến nó,
+   và bị bỏ qua hoàn toàn nếu trình duyệt không dựng được WebGL. */
+async function initThreeD() {
+  const mapStage = document.getElementById('map3d-stage');
+  const cardStage = document.getElementById('postcard3d-stage');
+
+  if (!mapStage && !cardStage) return;
+
+  const probe = document.createElement('canvas');
+  const gl = probe.getContext('webgl2') || probe.getContext('webgl');
+  if (!gl) {
+    console.warn('Trình duyệt không hỗ trợ WebGL — bỏ qua phần 3D.');
+    mapStage?.classList.add('map3d-failed');
+    document.getElementById('postcard3d')?.classList.add('postcard3d-failed');
+    return;
+  }
+
+  if (cardStage) {
+    try {
+      const { initPostcard3D } = await import('./postcard3d.js');
+      initPostcard3D(cardStage);
+    } catch (err) {
+      console.error('Mô hình bưu thiếp 3D lỗi:', err);
+      document.getElementById('postcard3d')?.classList.add('postcard3d-failed');
+    }
+  }
+
+  if (mapStage) {
+    try {
+      const { initVietnamMap } = await import('./map3d.js');
+      await initVietnamMap(mapStage);
+    } catch (err) {
+      console.error('Bản đồ 3D lỗi:', err);
+      mapStage.classList.add('map3d-failed');
+    }
+  }
+}
 
 /* === Location Cards === */
 function initLocationCards() {
@@ -57,6 +102,7 @@ function initLocationCards() {
     .map(
       (loc, i) => `
     <a href="${loc.url}" class="location-card reveal-scale delay-${i + 1}" id="location-${i}">
+      <div class="location-card-3d">
       <div class="location-card-media">
         <img class="location-card-image" src="${loc.image}" alt="${loc.name}" width="900" height="600" loading="lazy" decoding="async" />
         ${loc.status === 'coming-soon' ? '<span class="badge badge-red location-badge">Sắp Ra Mắt</span>' : ''}
@@ -66,6 +112,7 @@ function initLocationCards() {
         <h3>${loc.name}</h3>
         <p>${loc.description}</p>
       </div>
+      </div>
     </a>
   `
     )
@@ -73,6 +120,8 @@ function initLocationCards() {
 
   // Re-init scroll animations for new elements
   initScrollAnimations();
+  // Gắn hiệu ứng nghiêng 3D sau khi card đã có trong DOM
+  initCardTilt();
 }
 
 /* === Typing Effect === */

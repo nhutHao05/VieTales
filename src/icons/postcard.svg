@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Bưu thiếp">
+  <!-- tấm phía sau, chỉ lộ góc trên phải để gợi "một bộ sưu tập" -->
+  <path d="M10.5 4.5h13.5a2.5 2.5 0 0 1 2.5 2.5v9.5" />
+  <!-- tấm phía trước -->
+  <rect x="4" y="9" width="19.5" height="14" rx="2.5" />
+  <!-- tem -->
+  <rect x="17.8" y="11.6" width="4.2" height="3.6" rx="0.7" />
+  <!-- dòng địa chỉ -->
+  <path d="M7 14.6h6.2" />
+  <path d="M7 17.8h4.2" />
+</svg>

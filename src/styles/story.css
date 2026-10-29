@@ -1,183 +1,268 @@
 /* ============================================
-   Story Pages - Shared Layout
+   Story Pages - Phong cách "giấy & băng dính"
    Dùng chung cho các trang địa điểm trong /locations/
+
+   Bố cục: bưu thiếp bên trái, lời kể bên phải — giống web mẫu,
+   để ảnh và chữ đứng cạnh nhau thay vì xếp dọc.
    ============================================ */
 
-/* === Story Hero === */
-.story-hero {
-  position: relative;
-  height: 60vh;
-  min-height: 400px;
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: var(--space-2xl);
+/* === Khung trang === */
+.story-page {
+  background: var(--color-bg-section);
+  min-height: 100vh;
+  padding: var(--space-2xl) 0 var(--space-3xl);
 }
 
-.story-hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.story-hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.story-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(0, 0, 0, 0.4) 50%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
-}
-
-.story-header {
-  position: relative;
-  z-index: 1;
-  color: var(--color-white);
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  width: 100%;
-}
-
-.story-title {
-  font-family: var(--font-display);
-  font-size: var(--fs-h1);
-  margin-bottom: var(--space-sm);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.story-meta {
-  font-size: var(--fs-small);
-  color: rgba(255, 255, 255, 0.8);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-/* === Story Content === */
-.story-content {
-  background: var(--color-white);
-  padding: var(--space-3xl) 0;
-  position: relative;
-  z-index: 2;
-}
-
-.story-text {
-  max-width: 700px;
-  margin: 0 auto;
-  font-size: 1.1rem;
-  line-height: 2;
-  color: var(--color-text);
-}
-
-.story-text p {
-  margin-bottom: var(--space-md);
-}
-
-.story-text p:first-child::first-letter {
-  font-family: var(--font-display);
-  font-size: 3.5rem;
-  float: left;
-  line-height: 1;
-  padding-right: 0.5rem;
-  color: var(--color-primary);
-}
-
-/* === Back Navigation === */
+/* === Thanh quay về === */
 .back-nav {
-  position: absolute;
-  top: var(--space-md);
-  left: var(--space-md);
-  z-index: 10;
+  margin-bottom: var(--space-lg);
 }
 
 .back-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: var(--color-white);
-  padding: 0.6rem 1.2rem;
-  border-radius: var(--radius-xl);
+  padding: 0.55rem 1.15rem;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-hard-sm);
   font-weight: var(--fw-medium);
   font-size: var(--fs-small);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: var(--transition-base);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .back-btn:hover {
-  background: var(--color-white);
-  color: var(--color-primary);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 var(--color-ink);
 }
 
-/* === Story Footer Mark === */
-.story-mark {
-  text-align: center;
-  margin-top: var(--space-xl);
+/* === Bố cục hai cột: bưu thiếp | lời kể === */
+.story-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--space-xl);
+  align-items: start;
 }
 
-.story-mark img {
-  width: 70px;
-  margin: 0 auto;
-  opacity: 0.25;
+/* === Bưu thiếp === */
+.postcard {
+  position: relative;
+  background: var(--color-paper);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-paper);
+  box-shadow: var(--shadow-hard);
+  padding: 14px;
+  /* dán hơi lệch như tờ giấy ai đó đặt lên bàn */
+  transform: rotate(-1.2deg);
 }
 
-/* === Fact Box (thông tin nhanh về di tích) === */
+/* Hai miếng băng dính ở mép trên */
+.postcard::before,
+.postcard::after {
+  content: '';
+  position: absolute;
+  top: -11px;
+  z-index: 3;
+  width: 56px;
+  height: 20px;
+  background: var(--color-tape);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+.postcard::before {
+  left: 18px;
+  transform: rotate(-12deg);
+}
+
+.postcard::after {
+  right: 18px;
+  transform: rotate(12deg);
+}
+
+.postcard-media {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: calc(var(--radius-paper) - 8px);
+  border: 2px solid var(--color-ink);
+  background: var(--color-bg-section);
+}
+
+.postcard-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.postcard-caption {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 12px;
+  padding: 0 4px 2px;
+  color: var(--color-ink);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.postcard-caption span:first-child {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-ink);
+  border-radius: 8px;
+  background: var(--color-secondary);
+  transform: rotate(-6deg);
+}
+
+.postcard-caption svg {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+/* === Lời kể === */
+.story-body {
+  padding-top: var(--space-sm);
+}
+
+.story-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  line-height: 1.2;
+  color: var(--color-ink);
+  margin-bottom: var(--space-xs);
+  text-wrap: balance;
+}
+
+.story-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: var(--fs-caption);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.story-meta::before {
+  content: '';
+  width: 26px;
+  height: 2px;
+  background: var(--color-primary);
+}
+
+/* Đoạn mở đầu: chữ lớn hơn một chút để dẫn dắt */
+.story-lead {
+  font-size: 1.15rem;
+  line-height: 1.85;
+  color: var(--color-ink);
+  margin-bottom: var(--space-md);
+  font-weight: var(--fw-medium);
+}
+
+.story-text p {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+/* Câu chốt: in nghiêng, có vạch đỏ bên trái như ghi chú tay */
+.story-quote {
+  margin: var(--space-md) 0 0;
+  padding: 0.35rem 0 0.35rem 1rem;
+  border-left: 3px solid var(--color-primary);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.75;
+  color: var(--color-ink);
+}
+
+.story-text em {
+  font-style: italic;
+  color: var(--color-ink);
+}
+
+/* === Dải thông tin nhanh === */
 .story-facts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--space-md);
-  margin: var(--space-xl) 0;
-  padding: var(--space-lg);
-  background: var(--color-bg-warm);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: var(--space-md) 0 var(--space-lg);
 }
 
 .story-fact {
-  text-align: center;
+  padding: 0.7rem 0.85rem;
+  background: var(--color-paper);
+  border: 2px solid var(--color-ink);
+  border-radius: 14px;
+  box-shadow: var(--shadow-hard-sm);
 }
 
 .story-fact-label {
-  font-size: var(--fs-caption);
+  font-size: 0.68rem;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  margin-bottom: 0.3rem;
+  letter-spacing: 0.09em;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.15rem;
 }
 
 .story-fact-value {
   font-weight: var(--fw-semibold);
-  color: var(--color-text);
   font-size: var(--fs-small);
+  color: var(--color-ink);
+  line-height: 1.35;
+}
+
+/* === Dấu VieTales === */
+.story-mark {
+  margin-top: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--color-text-secondary);
+  font-size: var(--fs-caption);
+}
+
+.story-mark img {
+  width: 34px;
+  height: 34px;
+  opacity: 0.5;
 }
 
 /* === Responsive === */
+@media (max-width: 900px) {
+  .story-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .postcard {
+    transform: rotate(-0.8deg);
+  }
+}
+
 @media (max-width: 768px) {
-  .story-hero {
-    height: 50vh;
-    min-height: 320px;
-    padding-bottom: var(--space-xl);
+  .story-page {
+    padding: var(--space-xl) 0 var(--space-2xl);
   }
 
-  .story-content {
-    padding: var(--space-2xl) 0;
+  .story-facts {
+    grid-template-columns: 1fr;
   }
 
-  .story-text {
-    font-size: 1rem;
-  }
-
-  .back-nav {
-    top: var(--space-sm);
-    left: var(--space-sm);
+  .story-lead {
+    font-size: 1.05rem;
   }
 }

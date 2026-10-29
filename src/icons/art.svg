@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Nghệ thuật">
+  <!-- khung tranh -->
+  <rect x="5" y="7" width="22" height="18" rx="2.5" />
+  <!-- mặt trời -->
+  <circle cx="11" cy="12" r="1.8" />
+  <!-- núi -->
+  <path d="M6.5 22.5 12 15.5l5 7" />
+  <path d="M14.5 22.5 19.5 17l6 5.5" />
+</svg>

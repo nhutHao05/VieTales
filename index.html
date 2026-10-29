@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <!-- SEO Meta Tags -->
-  <title>VieTales - Kể Chuyện Việt Nam Qua Từng Tấm Bưu Thiếp</title>
+  <title>VieTales - Gửi Gắm Chuyện Việt Qua Từng Tấm Bưu Thiếp</title>
   <meta name="description" content="VieTales mang đến bộ sưu tập bưu thiếp nghệ thuật kể câu chuyện cổ tích và văn hóa các địa điểm nổi tiếng Việt Nam. Quét QR để khám phá!" />
   <meta name="keywords" content="VieTales, bưu thiếp Việt Nam, postcard, cổ tích Việt Nam, văn hóa Việt Nam, du lịch Việt Nam" />
   <meta name="author" content="VieTales" />
   
   <!-- Open Graph -->
-  <meta property="og:title" content="VieTales - Kể Chuyện Việt Nam Qua Từng Tấm Bưu Thiếp" />
+  <meta property="og:title" content="VieTales - Gửi Gắm Chuyện Việt Qua Từng Tấm Bưu Thiếp" />
   <meta property="og:description" content="Bộ sưu tập bưu thiếp nghệ thuật kể câu chuyện cổ tích và văn hóa các địa điểm nổi tiếng Việt Nam." />
   <meta property="og:image" content="/images/Logo.png" />
   <meta property="og:type" content="website" />
@@ -68,11 +68,11 @@
     
     <div class="hero-content">
       <div class="hero-logo">
-        <img src="/images/Logo.png" alt="VieTales - Kể Chuyện Việt Nam" />
+        <img src="/images/Logo.png" alt="VieTales - Gửi Gắm Chuyện Việt" />
       </div>
       
       <h1 class="hero-tagline">
-        Kể Chuyện <span class="highlight">Việt Nam</span><br />
+        Gửi Gắm <span class="highlight">Chuyện Việt</span><br />
         Qua Từng Tấm Bưu Thiếp
       </h1>
       
@@ -80,7 +80,12 @@
         Mỗi tấm bưu thiếp là một cánh cửa mở ra câu chuyện cổ tích, lịch sử và văn hóa của mảnh đất hình chữ S. 
         Quét mã QR để bắt đầu hành trình khám phá.
       </p>
-      
+
+      <!-- ========== MÔ HÌNH BƯU THIẾP 3D ========== -->
+      <div class="postcard3d" id="postcard3d">
+        <div class="postcard3d-stage" id="postcard3d-stage"></div>
+        <div class="postcard3d-hint">Kéo để xoay tấm bưu thiếp</div>
+      </div>
 
     </div>
     
@@ -145,25 +150,64 @@
         
         <div class="values-grid reveal-right">
           <div class="glass-card value-card delay-1">
-            <div class="value-icon">🎨</div>
+            <div class="value-icon">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <rect x="5" y="7" width="22" height="18" rx="2.5" />
+                <circle cx="11" cy="12" r="1.8" />
+                <path d="M6.5 22.5 12 15.5l5 7" />
+                <path d="M14.5 22.5 19.5 17l6 5.5" />
+              </svg>
+            </div>
             <h3>Nghệ Thuật</h3>
             <p>Thiết kế lấy cảm hứng từ tranh dân gian, sơn mài và mỹ thuật truyền thống Việt Nam</p>
           </div>
-          
+
           <div class="glass-card value-card delay-2">
-            <div class="value-icon">📖</div>
+            <div class="value-icon">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M16 10.5v14" />
+                <path d="M16 10.5c-3-2-6.6-2.4-10.5-1.7v13.7c3.9-0.7 7.5-0.3 10.5 1.7" />
+                <path d="M16 10.5c3-2 6.6-2.4 10.5-1.7v13.7c-3.9-0.7-7.5-0.3-10.5 1.7" />
+                <path d="M9 14.5h4" />
+                <path d="M9 17.5h4" />
+                <path d="M9 20.5h2.5" />
+                <path d="M19 14.5h4" />
+                <path d="M19 17.5h4" />
+                <path d="M20.5 20.5h2.5" />
+              </svg>
+            </div>
             <h3>Câu Chuyện</h3>
             <p>Kể lại những truyền thuyết, cổ tích gắn liền với từng địa danh nổi tiếng</p>
           </div>
-          
+
           <div class="glass-card value-card delay-3">
-            <div class="value-icon">🔗</div>
+            <div class="value-icon">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M4.5 11V7.5A3 3 0 0 1 7.5 4.5H11" />
+                <path d="M21 4.5h3.5a3 3 0 0 1 3 3V11" />
+                <path d="M27.5 21v3.5a3 3 0 0 1-3 3H21" />
+                <path d="M11 27.5H7.5a3 3 0 0 1-3-3V21" />
+                <rect x="10" y="10" width="5" height="5" rx="1" />
+                <rect x="17" y="10" width="5" height="5" rx="1" />
+                <rect x="10" y="17" width="5" height="5" rx="1" />
+                <path d="M17.5 17.5h2v2h-2z" fill="currentColor" stroke="none" />
+                <path d="M21.5 19.5v2.5h-2.5" />
+              </svg>
+            </div>
             <h3>Công Nghệ</h3>
             <p>Tích hợp QR code mở ra trải nghiệm số phong phú, sinh động</p>
           </div>
-          
+
           <div class="glass-card value-card delay-4">
-            <div class="value-icon">🌏</div>
+            <div class="value-icon">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <circle cx="16" cy="16" r="11" />
+                <ellipse cx="16" cy="16" rx="4.8" ry="11" />
+                <path d="M5 16h22" />
+                <path d="M7.6 9.5c2.3 1.5 5.2 2.3 8.4 2.3s6.1-0.8 8.4-2.3" />
+                <path d="M7.6 22.5c2.3-1.5 5.2-2.3 8.4-2.3s6.1 0.8 8.4 2.3" />
+              </svg>
+            </div>
             <h3>Lan Tỏa</h3>
             <p>Đưa văn hóa Việt Nam đến gần hơn với bạn bè quốc tế</p>
           </div>
@@ -191,21 +235,47 @@
       <div class="steps-container">
         <div class="glass-card step-card reveal delay-1" id="step-1">
           <div class="step-number">1</div>
-          <span class="step-icon">🏮</span>
+          <span class="step-icon">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M10.5 4.5h13.5a2.5 2.5 0 0 1 2.5 2.5v9.5" />
+              <rect x="4" y="9" width="19.5" height="14" rx="2.5" />
+              <rect x="17.8" y="11.6" width="4.2" height="3.6" rx="0.7" />
+              <path d="M7 14.6h6.2" />
+              <path d="M7 17.8h4.2" />
+            </svg>
+          </span>
           <h3>Chọn Bưu Thiếp</h3>
           <p>Chọn bưu thiếp với hình ảnh địa điểm bạn yêu thích. Mỗi tấm là một tác phẩm nghệ thuật được thiết kế tỉ mỉ.</p>
         </div>
         
         <div class="glass-card step-card reveal delay-2" id="step-2">
           <div class="step-number">2</div>
-          <span class="step-icon">📱</span>
+          <span class="step-icon">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <rect x="8" y="3" width="16" height="26" rx="3.5" />
+              <path d="M13.4 6.2h5.2" />
+              <rect x="11.6" y="10.6" width="3.6" height="3.6" rx="0.7" />
+              <rect x="16.4" y="10.6" width="3.6" height="3.6" rx="0.7" />
+              <rect x="11.6" y="15.2" width="3.6" height="3.6" rx="0.7" />
+              <path d="M16.6 15.4h3.2v3.2h-3.2z" fill="currentColor" stroke="none" />
+              <path d="M10.4 21.9h11.2" />
+            </svg>
+          </span>
           <h3>Quét Mã QR</h3>
           <p>Lật mặt sau và quét mã QR bằng camera điện thoại. Chỉ cần 1 giây để kết nối thế giới thực với thế giới số.</p>
         </div>
         
         <div class="glass-card step-card reveal delay-3" id="step-3">
           <div class="step-number">3</div>
-          <span class="step-icon">✨</span>
+          <span class="step-icon">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M11 15.4v9.8" />
+              <path d="M11 15.4c-2.4-1.4-5.2-1.8-8-1.4v9.8c2.8-0.4 5.6 0 8 1.4" />
+              <path d="M11 15.4c2.4-1.4 5.2-1.8 8-1.4v9.8c-2.8-0.4-5.6 0-8 1.4" />
+              <circle cx="22.3" cy="10.2" r="5.6" />
+              <path d="M26.3 14.6 29 17.4" />
+            </svg>
+          </span>
           <h3>Khám Phá Câu Chuyện</h3>
           <p>Đắm chìm vào câu chuyện cổ tích, lịch sử và văn hóa đặc sắc của địa điểm đó. Trải nghiệm hoàn toàn miễn phí!</p>
         </div>
@@ -232,6 +302,37 @@
       <div class="locations-grid" id="locations-grid">
         <!-- Location cards populated by JS -->
       </div>
+
+      <!-- ========== BẢN ĐỒ 3D ========== -->
+      <div class="map3d-block reveal" id="map3d-block">
+        <div class="map3d-frame">
+          <div class="map3d-stage" id="map3d-stage">
+            <div class="map3d-overlay">
+              <span class="map3d-kicker">
+                <span class="map3d-dot"></span>
+                Bản đồ 3D
+              </span>
+              <h3 class="map3d-title">Ba địa điểm, một miền Tây</h3>
+              <p class="map3d-note">
+                Cả ba di tích đều nằm ở phường Bình Thủy, Cần Thơ. Kéo để xoay, cuộn để
+                phóng, bấm vào điểm đỏ để mở câu chuyện.
+              </p>
+              <p class="map3d-disclaimer">
+                Khoảng cách giữa ba điểm đã được phóng đại để tách rời nhau trên bản đồ —
+                thực tế chúng chỉ cách nhau 1–2 km.
+              </p>
+            </div>
+            <div class="map3d-legend">
+              <span class="map3d-dot"></span>
+              <span>Bình Thủy, Cần Thơ — 3 bưu thiếp</span>
+            </div>
+            <button type="button" class="map3d-zoom" id="map3d-zoom" aria-pressed="false">
+              Zoom Cần Thơ
+            </button>
+            <div class="map3d-hint">Kéo để xoay · Cuộn để phóng</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -246,7 +347,7 @@
             <span class="nav-logo-text">Vie<span>Tales</span></span>
           </a>
           <p>
-            Kể Chuyện Việt Nam Qua Từng Tấm Bưu Thiếp. 
+            Gửi Gắm Chuyện Việt Qua Từng Tấm Bưu Thiếp.
             Mỗi tấm bưu thiếp là một hành trình khám phá văn hóa, lịch sử và những câu chuyện cổ tích đầy màu sắc.
           </p>
 
@@ -266,15 +367,33 @@
         <div class="footer-contact">
           <h4>Liên Hệ</h4>
           <div class="footer-contact-item">
-            <span>🌐</span>
+            <span class="footer-contact-icon">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <circle cx="16" cy="16" r="11" />
+                <ellipse cx="16" cy="16" rx="4.8" ry="11" />
+                <path d="M5 16h22" />
+                <path d="M7.6 9.5c2.3 1.5 5.2 2.3 8.4 2.3s6.1-0.8 8.4-2.3" />
+                <path d="M7.6 22.5c2.3-1.5 5.2-2.3 8.4-2.3s6.1 0.8 8.4 2.3" />
+              </svg>
+            </span>
             <span>vietales.id.vn</span>
           </div>
           <div class="footer-contact-item">
-            <span>📧</span>
+            <span class="footer-contact-icon">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <rect x="4" y="7.5" width="24" height="17" rx="2.5" />
+                <path d="M4.4 9.6 14.3 17a3 3 0 0 0 3.4 0l9.9-7.4" />
+              </svg>
+            </span>
             <span>contact@vietales.id.vn</span>
           </div>
           <div class="footer-contact-item">
-            <span>📍</span>
+            <span class="footer-contact-icon">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M16 28.5c5.2-6.1 8-10.4 8-14a8 8 0 1 0-16 0c0 3.6 2.8 7.9 8 14z" />
+                <circle cx="16" cy="14.2" r="2.9" />
+              </svg>
+            </span>
             <span>Việt Nam</span>
           </div>
         </div>

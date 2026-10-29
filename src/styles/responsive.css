@@ -197,6 +197,15 @@
     transition-duration: 0.01ms !important;
   }
 
+  /* tắt nghiêng 3D cho người bật giảm chuyển động */
+  .location-card-3d {
+    transform: none !important;
+  }
+
+  .location-card-media::after {
+    display: none;
+  }
+
   .reveal,
   .reveal-left,
   .reveal-right,
