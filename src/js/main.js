@@ -11,27 +11,27 @@ import { initScrollAnimations, initParallax } from './animations.js';
 // === Location Data ===
 const locations = [
   {
-    name: 'Vịnh Hạ Long',
-    region: 'Quảng Ninh',
-    description: 'Di sản thiên nhiên thế giới UNESCO với hàng nghìn hòn đảo đá vôi hùng vĩ, gắn liền với truyền thuyết Rồng phun ngọc.',
-    image: '/images/halong-bay.jpg',
-    url: '/locations/halong.html',
+    name: 'Đền Thờ Vua Hùng',
+    region: 'Bình Thủy, Cần Thơ',
+    description: 'Công trình thờ tự các Vua Hùng lớn nhất miền Tây, kiến trúc mang hình bản đồ Việt Nam với 18 cánh cung tượng trưng 18 đời vua.',
+    image: '/images/den-hung-card.webp',
+    url: '/locations/den-hung.html',
     status: 'available',
   },
   {
-    name: 'Phố Cổ Hội An',
-    region: 'Quảng Nam',
-    description: 'Đô thị cổ với đèn lồng lung linh bên sông Thu Bồn, nơi giao thoa văn hóa Đông - Tây qua nhiều thế kỷ.',
-    image: '/images/hoi-an.jpg',
-    url: '/locations/hoi-an.html',
+    name: 'Nam Nhã Phật Đường',
+    region: 'Bình Thủy, Cần Thơ',
+    description: 'Ngôi chùa cổ bên sông Bình Thủy, từng là cơ sở của phong trào yêu nước đầu thế kỷ XX, di tích lịch sử cấp quốc gia.',
+    image: '/images/nam-nha-card.webp',
+    url: '/locations/nam-nha.html',
     status: 'available',
   },
   {
-    name: 'Văn Miếu Quốc Tử Giám',
-    region: 'Hà Nội',
-    description: 'Trường đại học đầu tiên của Việt Nam, biểu tượng cho truyền thống hiếu học ngàn năm văn hiến.',
-    image: '/images/van-mieu.jpg',
-    url: '/locations/van-mieu.html',
+    name: 'Khu Tưởng Niệm Thủ Khoa Bùi Hữu Nghĩa',
+    region: 'Bình Thủy, Cần Thơ',
+    description: 'Nơi yên nghỉ của Thủ khoa Bùi Hữu Nghĩa (1807–1872) — nhà thơ, nhà soạn tuồng, một trong "tứ kiệt" đất Nam Bộ.',
+    image: '/images/bui-huu-nghia-card.webp',
+    url: '/locations/bui-huu-nghia.html',
     status: 'available',
   },
 ];
@@ -56,16 +56,16 @@ function initLocationCards() {
   grid.innerHTML = locations
     .map(
       (loc, i) => `
-    <a href="${loc.url}" class="location-card reveal-scale delay-${i + 1}" id="location-${i}" style="display: block; text-decoration: none;">
-      <img class="location-card-image" src="${loc.image}" alt="${loc.name}" loading="lazy" />
-      <div class="location-card-overlay">
-        <div class="location-card-content">
-          <span class="badge badge-gold">${loc.region}</span>
-          <h3>${loc.name}</h3>
-          <p>${loc.description}</p>
-        </div>
+    <a href="${loc.url}" class="location-card reveal-scale delay-${i + 1}" id="location-${i}">
+      <div class="location-card-media">
+        <img class="location-card-image" src="${loc.image}" alt="${loc.name}" width="900" height="600" loading="lazy" decoding="async" />
+        ${loc.status === 'coming-soon' ? '<span class="badge badge-red location-badge">Sắp Ra Mắt</span>' : ''}
       </div>
-      ${loc.status === 'coming-soon' ? '<span class="badge badge-red location-badge">Sắp Ra Mắt</span>' : ''}
+      <div class="location-card-body">
+        <span class="badge badge-gold">${loc.region}</span>
+        <h3>${loc.name}</h3>
+        <p>${loc.description}</p>
+      </div>
     </a>
   `
     )

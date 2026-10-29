@@ -10,9 +10,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        halong: resolve(__dirname, 'locations/halong.html'),
-        hoian: resolve(__dirname, 'locations/hoi-an.html'),
-        vanmieu: resolve(__dirname, 'locations/van-mieu.html')
+        denhung: resolve(__dirname, 'locations/den-hung.html'),
+        namnha: resolve(__dirname, 'locations/nam-nha.html'),
+        buihuunghia: resolve(__dirname, 'locations/bui-huu-nghia.html')
       }
     }
   },

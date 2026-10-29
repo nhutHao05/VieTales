@@ -117,7 +117,7 @@
 
   .locations-grid {
     grid-template-columns: 1fr;
-    max-width: 400px;
+    max-width: 480px;
     margin: 0 auto;
   }
 
@@ -180,10 +180,6 @@
 
   .hero-scroll-indicator {
     display: none;
-  }
-
-  .location-card {
-    aspect-ratio: 4/5;
   }
 
   .stats-grid {
