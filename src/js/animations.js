@@ -165,8 +165,12 @@ export function initParallax() {
           const progress = scrollY / heroHeight;
 
           if (heroContent) {
+            /* Chỉ trôi chữ theo cuộn, KHÔNG làm mờ dần.
+             * Trước đây dòng này là `opacity = 1 - progress * 0.8`, khiến khối
+             * chữ ở đầu trang nhạt dần rồi gần như biến mất khi cuộn xuống.
+             * Yêu cầu là đoạn đầu đó luôn hiện rõ, nên bỏ phần mờ. */
             heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
-            heroContent.style.opacity = 1 - progress * 0.8;
+            heroContent.style.opacity = 1;
           }
 
           particles.forEach((particle, i) => {

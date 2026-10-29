@@ -2,3 +2,9 @@ node_modules
 dist
 .DS_Store
 *.local
+
+# file nhap kiem thu tam thoi
+.*.py
+.sw*
+.pz*
+.hk*
