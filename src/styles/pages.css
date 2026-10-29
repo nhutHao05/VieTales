@@ -44,6 +44,82 @@
   z-index: 0;
 }
 
+/* === MẢNH GHÉP TRÔI NỔI ===
+   Các miếng tranh ghép rải quanh hero, trôi lên xuống và quay nhẹ.
+   Nằm ở z-index 0, dưới .hero-content nên không bao giờ che chữ. */
+.hero-pieces {
+  position: absolute;
+  inset: 0;
+  /* 0 để chắc chắn nằm dưới .hero-content (z-index 1), tránh mảnh ghép che chữ */
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.puzzle-piece {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: var(--s);
+  color: var(--hue);
+  opacity: 0.62;
+  /* phối cảnh để mảnh không phẳng lì như sticker */
+  transform: perspective(600px) rotateX(16deg) rotate(var(--r));
+  /* hai lớp bóng: một lớp mềm làm bóng đổ, một lớp cứng lệch nhẹ tạo cảm
+     giác mảnh có độ dày như miếng ghép bìa thật */
+  filter: drop-shadow(0 8px 14px rgba(58, 46, 34, 0.18))
+    drop-shadow(2px 2.5px 0 rgba(58, 46, 34, 0.13));
+  animation: pieceDrift var(--d) ease-in-out infinite var(--delay);
+  will-change: transform;
+}
+
+/* Mặt mảnh ghép: nền màu + viền đậm hơn để thấy rõ chốt lồi và lõm */
+.puzzle-piece path {
+  fill: color-mix(in srgb, var(--hue) 46%, transparent);
+  stroke: color-mix(in srgb, var(--hue) 88%, #3A2E22);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+/* Bay lơ lửng: dịch lên xuống + nghiêng qua lại, kèm nhịp thở nhẹ về độ mờ */
+@keyframes pieceDrift {
+  0%,
+  100% {
+    transform: perspective(600px) rotateX(16deg) rotate(var(--r)) translate3d(0, 0, 0);
+    opacity: 0.46;
+  }
+  50% {
+    transform: perspective(600px) rotateX(16deg) rotate(calc(var(--r) + 7deg))
+      translate3d(6px, -24px, 0);
+    opacity: 0.72;
+  }
+}
+
+/* Người bật giảm chuyển động: giữ mảnh ghép nhưng đứng yên */
+@media (prefers-reduced-motion: reduce) {
+  .puzzle-piece {
+    animation: none;
+    opacity: 0.42;
+  }
+}
+
+/* Màn hình nhỏ: giảm bớt để không rối mắt và không lấn chữ */
+@media (max-width: 768px) {
+  .hero-pieces .puzzle-piece:nth-child(n + 6) {
+    display: none;
+  }
+
+  .puzzle-piece {
+    opacity: 0.4;
+  }
+
+  .hero-pieces .puzzle-piece:nth-child(5) {
+    left: 84%;
+    top: 86%;
+  }
+}
+
 .particle {
   position: absolute;
   border-radius: 50%;
