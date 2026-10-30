@@ -66,10 +66,12 @@ export function initPostcard3D(container) {
   controls.enablePan = false;
   controls.enableZoom = false;
   controls.rotateSpeed = 0.6;
-  controls.minPolarAngle = Math.PI * 0.32;
-  controls.maxPolarAngle = Math.PI * 0.68;
-  controls.minAzimuthAngle = -Math.PI * 0.45;
-  controls.maxAzimuthAngle = Math.PI * 0.45;
+  /* Quay được TRỌN 360° quanh trục dọc.
+   * Trước đây có minAzimuthAngle/maxAzimuthAngle chặn ở ±0,45π (tức ±81°, tổng
+   * 162°) nên không thể quay hết một vòng; và mỗi lần kéo chạm mốc thì camera
+   * dừng phựt lại, gây cảm giác giật cục. Bỏ hai dòng đó là hết cả hai vấn đề. */
+  controls.minPolarAngle = Math.PI * 0.08;
+  controls.maxPolarAngle = Math.PI * 0.92;
   controls.autoRotate = false;
 
   scene.add(new THREE.AmbientLight(0xffffff, 1.5));
@@ -106,29 +108,6 @@ export function initPostcard3D(container) {
     new THREE.LineBasicMaterial({ color: 0x3a2e22, transparent: true, opacity: 0.35 })
   );
   group.add(outline);
-
-  // Bóng đổ mềm.
-  // Không dùng mặt phẳng đen mờ: trên nền sáng nó hiện ra thành một tấm xám
-  // đặc nằm sau tấm thẻ. Phải vẽ gradient tròn mờ dần ở rìa mới ra bóng.
-  const shadowCanvas = document.createElement('canvas');
-  shadowCanvas.width = shadowCanvas.height = 256;
-  const sg = shadowCanvas.getContext('2d');
-  const grad = sg.createRadialGradient(128, 128, 10, 128, 128, 126);
-  grad.addColorStop(0, 'rgba(20,14,8,0.42)');
-  grad.addColorStop(0.55, 'rgba(20,14,8,0.16)');
-  grad.addColorStop(1, 'rgba(20,14,8,0)');
-  sg.fillStyle = grad;
-  sg.fillRect(0, 0, 256, 256);
-
-  const shadowTex = new THREE.CanvasTexture(shadowCanvas);
-  const shadow = new THREE.Mesh(
-    new THREE.PlaneGeometry(CARD_W * 1.9, CARD_H * 2.1),
-    new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false })
-  );
-  shadow.position.z = -1.4;
-  shadow.position.y = -1.1;
-  shadow.renderOrder = -1;
-  group.add(shadow);
 
   // === nạp ảnh postcard (cả hai mặt) ===
   let index = 0;
@@ -219,8 +198,19 @@ export function initPostcard3D(container) {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let spin = !reduceMotion;
 
+  /* Tính theo thời gian thực (giây) chứ không theo số khung hình.
+   * Trước đây cộng 0,0055 rad MỖI KHUNG HÌNH, nên máy 144Hz quay nhanh gấp
+   * 2,4 lần máy 60Hz và tốc độ giật cục khi khung hình dao động. 0,33 rad/giây
+   * giữ đúng tốc độ cũ trên màn hình 60Hz nhưng đều nhau trên mọi thiết bị. */
+  let lastT = performance.now();
+
   const render = () => {
-    if (spin) pivot.rotation.y += 0.0055;
+    const now = performance.now();
+    // chặn trần 0,1s để không nhảy một bước dài sau khi chuyển tab quay lại
+    const dt = Math.min((now - lastT) / 1000, 0.1);
+    lastT = now;
+
+    if (spin) pivot.rotation.y += 0.33 * dt;
     controls.update();
     renderer.render(scene, camera);
     raf = visible ? requestAnimationFrame(render) : null;

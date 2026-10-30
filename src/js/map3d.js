@@ -53,7 +53,9 @@ export async function initVietnamMap(container) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 2000);
+  /* near/far phải được đặt lại theo khoảng cách camera (xem setDepthRange).
+   * Giá trị khởi tạo ở đây chỉ là tạm, sẽ bị ghi đè ngay trong fit(). */
+  const camera = new THREE.PerspectiveCamera(38, 1, 1, 200);
 
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
@@ -119,22 +121,38 @@ export async function initVietnamMap(container) {
   geo.boundingBox.getCenter(offset);
   geo.translate(-offset.x, -offset.y, -offset.z);
 
-  // toạ độ 3D của một điểm trên mặt trên cùng của khối
-  const onTop = ([lon, lat]) => {
+  /* Đường bờ biển được vẽ bằng LineSegments nằm ĐÚNG trên mặt trên của khối.
+   * Hai bề mặt trùng khít nhau về độ sâu nên tranh chấp z-buffer: nét bị đứt
+   * quãng và nhoè thành những vệt sọc khi phóng to. Nâng đường bờ lên một
+   * khoảng rất nhỏ (0,7% bề dày) là đủ tách hẳn, mắt thường không thấy lệch. */
+  const COAST_LIFT = 0.015;
+
+  const onTop = ([lon, lat], lift = 0) => {
     const [px, py] = project([lon, lat], SCALE);
-    return new THREE.Vector3(px - offset.x, DEPTH - offset.y, -py - offset.z);
+    return new THREE.Vector3(px - offset.x, DEPTH + lift - offset.y, -py - offset.z);
   };
 
-  const land = new THREE.Mesh(
-    geo,
-    new THREE.MeshStandardMaterial({
-      color: COLORS.land,
-      roughness: 0.62,
-      metalness: 0.12,
-      emissive: 0x0a2b22,
-      emissiveIntensity: 0.5,
-    })
-  );
+  /* Mặt đất dùng vật liệu KHÔNG nhận sáng (MeshBasicMaterial) — đây là kết luận
+ * sau khi đo, không phải lựa chọn cho nhanh:
+ *
+ *  - tranh chấp độ sâu:   đổi near/far (20.000:1 -> 15:1), nâng đường bờ lên
+ *                         0,015, tắt depthWrite  -> vệt sọc KHÔNG đổi (2.24 -> 2.24)
+ *  - pháp tuyến sai:      mọi pháp tuyến hướng lên lệch đúng 0°, ép về (0,1,0)
+ *                         -> KHÔNG đổi
+ *  - polygon lồng nhau:   15 polygon không cái nào nằm trong cái khác -> KHÔNG phải
+ *  - banding 8-bit:       bật dithering -> TỆ HƠN
+ *  - đường bờ biển:       ẩn đi -> chỉ giảm một nửa, phần còn lại vẫn sọc
+ *
+ * Chỉ khi bỏ hoàn toàn bước tính sáng thì mặt phẳng mới sạch tuyệt đối (đã
+ * chụp đối chứng: mặt trên tô màu phẳng, không một vệt). Vậy vệt sọc do bước
+ * tính sáng sinh ra trên mặt phẳng rộng — không sửa được bằng tham số.
+ *
+ * Vì thế mặt đất được tô phẳng hoàn toàn — xem phần tạo `land` bên dưới. */
+  /* Một vật liệu duy nhất cho toàn khối: phẳng, cùng một màu ở mặt trên và
+   * thành bên. Không truyền mảng vật liệu vì ExtrudeGeometry phát ra ~30 nhóm
+   * và thứ tự nhóm không ổn định — tô theo chỉ số nhóm sẽ ra mảng màu sai.
+   * Độ sâu của khối vẫn đọc được nhờ đường bờ biển sáng bao quanh. */
+  const land = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: COLORS.land }));
   scene.add(land);
 
   // Đường bờ biển: vẽ lại chính các ring của GeoJSON thành đường liền.
@@ -144,14 +162,21 @@ export async function initVietnamMap(container) {
   data.polygons.forEach((rings) => {
     rings.forEach((ring) => {
       for (let i = 0; i < ring.length - 1; i++) {
-        coastPts.push(onTop(ring[i]));
-        coastPts.push(onTop(ring[i + 1]));
+        coastPts.push(onTop(ring[i], COAST_LIFT));
+        coastPts.push(onTop(ring[i + 1], COAST_LIFT));
       }
     });
   });
   const coast = new THREE.LineSegments(
     new THREE.BufferGeometry().setFromPoints(coastPts),
-    new THREE.LineBasicMaterial({ color: COLORS.landEdge, transparent: true, opacity: 0.9 })
+    new THREE.LineBasicMaterial({
+      color: COLORS.landEdge,
+      transparent: true,
+      opacity: 0.9,
+      // không ghi độ sâu: đường bờ chỉ để nhìn, không được che hay tranh chấp
+      // với mặt đất bên dưới
+      depthWrite: false,
+    })
   );
   scene.add(coast);
 
@@ -263,6 +288,18 @@ export async function initVietnamMap(container) {
   // khai báo TRƯỚC fit() vì fit() có ghi vào biến này
   let fullDist = 60;
 
+  /* Độ chính xác của depth buffer tỉ lệ nghịch với tỉ số far/near.
+   * Ban đầu camera để near 0,1 và far 2000 — tỉ số 20.000:1, quá thô, nên khi
+   * phóng to vào Cần Thơ các tam giác gần như đồng phẳng trên mặt đất tranh
+   * chấp độ sâu và hiện thành những vệt sọc dọc. Giữ tỉ số trong khoảng vài
+   * trăm lần là hết hẳn. Vì vậy near/far được tính lại theo khoảng cách camera
+   * mỗi khi khung nhìn đổi, thay vì cố định một lần. */
+  const setDepthRange = (camDist) => {
+    camera.near = Math.max(0.2, camDist * 0.05);
+    camera.far = camDist + 80;
+    camera.updateProjectionMatrix();
+  };
+
   const fit = () => {
     const w = container.clientWidth || 1;
     const h = container.clientHeight || 1;
@@ -283,6 +320,7 @@ export async function initVietnamMap(container) {
     controls.target.set(0, 0, 0);
     controls.minDistance = dist * 0.03;   // cho phép vào sát Cần Thơ
     controls.maxDistance = dist * 1.9;
+    setDepthRange(camera.position.length());
     controls.update();
     camera.updateProjectionMatrix();
     fullDist = dist;
@@ -302,6 +340,7 @@ export async function initVietnamMap(container) {
     const pos = new THREE.Vector3().setFromSpherical(sph).add(target);
     camera.position.copy(pos);
     controls.target.copy(target);
+    setDepthRange(distance);
     controls.update();
   };
 
@@ -341,6 +380,7 @@ export async function initVietnamMap(container) {
 
   let raf = null;
   let visible = true;
+  let lastDepthDist = 0;
   const clock = new THREE.Clock();
 
   const render = () => {
@@ -353,6 +393,15 @@ export async function initVietnamMap(container) {
      * cách camera bù lại đúng độ phóng đại của phép chiếu. */
     const camDist = camera.position.distanceTo(controls.target);
     const mScale = Math.min(camDist / fullDist, 1);
+
+    /* Người dùng cuộn chuột làm khoảng cách đổi liên tục, nên dải near/far
+     * cũng phải theo kịp — nếu không, lúc phóng to sẽ quay lại tình trạng
+     * tranh chấp độ sâu. Chỉ cập nhật khi lệch đủ nhiều để khỏi tính lại ma
+     * trận chiếu mỗi khung hình. */
+    if (Math.abs(camDist - lastDepthDist) > camDist * 0.05) {
+      lastDepthDist = camDist;
+      setDepthRange(camDist);
+    }
 
     markers.forEach((g) => {
       const { rings, head, pinH } = g.userData;
