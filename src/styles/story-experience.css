@@ -33,8 +33,11 @@
 .heritage-exhibition-head>.eyebrow { grid-column:1/-1; color:var(--journal-red); }
 .heritage-exhibition-head h2,.heritage-next h2 { font-family:var(--font-display); font-size:clamp(1.9rem,3.3vw,3rem); line-height:1.2; color:var(--journal-ink); }
 .heritage-exhibition-head>p:last-child { max-width:260px; font-size:.8rem; color:#82735f; line-height:1.8; }
-.heritage-journey { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:60px; align-items:start; }
-.artifact-panel { position:sticky; top:20px; min-width:0; background:#fff; border:1px solid #e9e3d8; border-radius:22px; padding:20px; box-shadow:0 20px 55px #392b1510; }
+.heritage-journey { display:grid; grid-template-columns:minmax(0,1fr); gap:48px; align-items:start; max-width:820px; margin-inline:auto; }
+.heritage-chapters { order:-1; }
+.model-credit { flex-basis:100%; font-size:.68rem; line-height:1.7; }
+.model-credit a { text-decoration:underline; text-underline-offset:3px; }
+.artifact-panel { position:relative; min-width:0; width:100%; background:#fff; border:1px solid #e9e3d8; border-radius:22px; padding:20px; box-shadow:0 20px 55px #392b1510; }
 .artifact-topline { display:flex; justify-content:space-between; gap:12px; font-size:.65rem; letter-spacing:.11em; color:#816643; padding:3px 4px 16px; }
 .artifact-stage { position:relative; height:440px; overflow:hidden; isolation:isolate; border-radius:14px; background:radial-gradient(ellipse at 45% 35%,#fff 12%,#f5f0e4 70%,#e8e1d3); }
 .artifact-stage::before { content:'ẢNH MINH HỌA CỦA NHÓM'; position:absolute; top:18px; left:18px; font-size:.58rem; letter-spacing:.16em; color:#95866b; pointer-events:none; }
@@ -100,7 +103,7 @@
 .heritage-next nav { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:26px; }
 .heritage-next nav a { display:flex; gap:20px; justify-content:space-between; border-top:1px solid #c8bca3; padding:20px 0 0; font-family:var(--font-display); font-size:1.15rem; color:#45513d; }
 .heritage-next nav a:hover { color:var(--journal-red); }
-.heritage-footer { display:flex; justify-content:space-between; gap:20px; padding:26px 36px; border-top:1px solid #dacdb7; font-size:.75rem; color:#9a8770; }
+.heritage-footer { display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px; padding:26px 36px; border-top:1px solid #dacdb7; font-size:.75rem; color:#9a8770; }
 @media(min-width:1500px) { .artifact-stage::after { font-size:3rem; } }
 @media(max-width:1000px) {
  .heritage-intro { gap:30px; padding:60px 30px; min-height:620px; }

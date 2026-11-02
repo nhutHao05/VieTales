@@ -9,7 +9,7 @@ export const storyAssets = {
     {
       "src": "/images/story/dong-son-drum-poster.webp",
       "label": "Trống đồng",
-      "caption": "Trống đồng Đông Sơn — ảnh render từ mô hình 3D của ndnguyen3d (CC BY 4.0)."
+      "caption": "Trống đồng Đông Sơn"
     },
     {
       "src": "/images/story/den-hung-tuong.webp",

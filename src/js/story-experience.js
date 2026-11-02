@@ -11,7 +11,7 @@ let display=null, loadVersion=0, spinning=false, loading=false;
 const modelButton=document.querySelector('[data-action="display-model"]');
 const slug=document.body.dataset.story;
 const modelIndex=slug==='den-hung'?1:-1;
-const modelTitle='Trống đồng Đông Sơn · ndnguyen3d';
+const modelTitle='Trống đồng Đông Sơn';
 const updateStatus=()=>{status.textContent=display?modelTitle+' · Kéo xoay 360° · Cuộn để phóng':items[active].label+' · Ảnh 2D';};
 function closeDisplay(){
  loadVersion++;display?.dispose();display=null;
@@ -73,18 +73,25 @@ function select(i) {
   if(i===modelIndex)toggleDisplay();
 }
 if (items && stage && image) {
+  // Keep reading and keyboard order aligned: story first, images below.
+  const panel=stage.closest('.artifact-panel');
+  panel.parentElement.append(panel);
   stage.classList.add('is-photo');
   image.draggable = false;
   picker.forEach(b => b.addEventListener('click', () => select(Number(b.dataset.artifact))));
-  document.querySelectorAll('[data-look]').forEach(a => a.addEventListener('click', () => select(Number(a.dataset.look))));
+  document.querySelectorAll('[data-look]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();select(Number(a.dataset.look));
+    stage.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});
+    stage.focus({preventScroll:true});
+  }));
   document.querySelector('.artifact-toolbar').addEventListener('click', e => {
     const action = e.target.closest('button')?.dataset.action;
     if (action === 'display-model') toggleDisplay();
     if (action === 'display-rotate' && display) { spinning=!spinning;display.animate(spinning);e.target.closest('button').setAttribute('aria-pressed',String(spinning)); }
     if (['display-back','display-front','display-side','reset'].includes(action)) {spinning=false;display?.animate(false);document.querySelector('[data-action="display-rotate"]')?.setAttribute('aria-pressed','false');}
-    if (action === 'display-back') { display?.view(Math.PI); status.textContent='Mặt sau · Mô hình GLB của ndnguyen3d'; }
+    if (action === 'display-back') { display?.view(Math.PI); status.textContent='Trống đồng · Mặt sau'; }
     if (action === 'display-front') { display?.view(0); updateStatus(); }
-    if (action === 'display-side') { display?.view(Math.PI/2); status.textContent='Mặt bên · Mô hình GLB của ndnguyen3d'; }
+    if (action === 'display-side') { display?.view(Math.PI/2); status.textContent='Trống đồng · Mặt bên'; }
     if (action === 'zoom-in') display?display.zoom(.85):zoom(1.3);
     if (action === 'zoom-out') display?display.zoom(1.18):zoom(1/1.3);
     if (action === 'reset') { reset();display?.reset(); }
