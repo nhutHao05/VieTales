@@ -180,6 +180,52 @@ export async function initVietnamMap(container) {
   );
   scene.add(coast);
 
+  // Offshore polygons from the same bundled province dataset as the 2D map.
+  const islandResponse = await fetch('/data/vietnam-provinces.json');
+  if (!islandResponse.ok) throw new Error('Island data unavailable');
+  const provinceData = await islandResponse.json();
+  const archipelagos = new THREE.Group();
+  archipelagos.name = 'archipelagos';
+  scene.add(archipelagos);
+  for (const [provinceName,label] of [['Đà Nẵng','Quần đảo Hoàng Sa'],['Khánh Hòa','Quần đảo Trường Sa']]) {
+    const rings = provinceData.provinces.find(p=>p.name===provinceName).polygons
+      .filter(r=>r.length>=3 && r.every(p=>p[0]>111));
+    const group = new THREE.Group();
+    group.name = label;
+    const islandShapes = rings.map(ring=>{
+      const points=ring.map(p=>project(p,SCALE));
+      const xs=points.map(p=>p[0]), ys=points.map(p=>p[1]);
+      const cx=(Math.min(...xs)+Math.max(...xs))/2, cy=(Math.min(...ys)+Math.max(...ys))/2;
+      // Minimum visible footprint; geographic centres are not moved.
+      const extent=Math.max(Math.max(...xs)-Math.min(...xs),Math.max(...ys)-Math.min(...ys));
+      const magnify=Math.max(1,.09/Math.max(extent,.001));
+      const shape=new THREE.Shape();
+      points.forEach(([x,y],i)=>shape[i?'lineTo':'moveTo'](cx+(x-cx)*magnify,cy+(y-cy)*magnify));
+      shape.closePath();
+      return shape;
+    });
+    const geometry=new THREE.ExtrudeGeometry(islandShapes,{depth:.4,bevelEnabled:false,curveSegments:1});
+    geometry.rotateX(-Math.PI/2);
+    geometry.translate(-offset.x,DEPTH-.4-offset.y,-offset.z);
+    const mesh=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({color:COLORS.land}));
+    group.add(mesh);
+    const edges=new THREE.LineSegments(new THREE.EdgesGeometry(geometry,35),new THREE.LineBasicMaterial({color:COLORS.landEdge}));
+    group.add(edges);
+    archipelagos.add(group);
+    const box=new THREE.Box3().setFromObject(mesh), center=box.getCenter(new THREE.Vector3());
+    const labelCanvas=document.createElement('canvas');
+    labelCanvas.width=768; labelCanvas.height=128;
+    const ctx=labelCanvas.getContext('2d');
+    ctx.fillStyle='#fff8eb'; ctx.fillRect(0,0,768,128);
+    ctx.fillStyle='#28624f'; ctx.textAlign='center'; ctx.font='600 40px sans-serif';
+    ctx.fillText(label,384,78);
+    const texture=new THREE.CanvasTexture(labelCanvas);
+    const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,depthTest:false}));
+    sprite.position.set(center.x,box.max.y+.8,box.min.z-1);
+    sprite.scale.set(6,1,1); sprite.name=label+' label';
+    group.add(sprite);
+  }
+
   // === marker cho từng địa điểm ===
   /* Ba di tích nằm trong cùng một phường, cách nhau 1–2 km. Trên thực địa
    * khoảng cách đó chỉ bằng 0,02 đơn vị cảnh — nhỏ hơn một pixel, nên nếu vẽ
@@ -187,7 +233,8 @@ export async function initVietnamMap(container) {
    * Vì vậy độ lệch giữa chúng được PHÓNG ĐẠI lên cho dễ đọc, còn vị trí gốc
    * vẫn là toạ độ thật. Điều này được ghi rõ trong phần chú thích trên trang. */
   const markers = [];
-  const bbox = new THREE.Box3().setFromObject(land);
+  const bbox = new THREE.Box3().setFromObject(land).union(new THREE.Box3().setFromObject(archipelagos));
+  const countryCenter = bbox.getCenter(new THREE.Vector3());
   const size = new THREE.Vector3();
   bbox.getSize(size);
 
@@ -301,8 +348,9 @@ export async function initVietnamMap(container) {
   };
 
   const fit = () => {
-    const w = container.clientWidth || 1;
-    const h = container.clientHeight || 1;
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
 
@@ -315,9 +363,9 @@ export async function initVietnamMap(container) {
 
     // góc nhìn dốc hơn để bản đồ chiếm khung: nhìn càng ngang thì hình chữ S
     // càng dẹt và chừa nhiều khoảng trống hai bên
-    camera.position.set(0, dist * 0.62, dist * 0.80);
-    camera.lookAt(0, 0, 0);
-    controls.target.set(0, 0, 0);
+    camera.position.set(countryCenter.x, countryCenter.y + dist * 0.62, countryCenter.z + dist * 0.80);
+    camera.lookAt(countryCenter);
+    controls.target.copy(countryCenter);
     controls.minDistance = dist * 0.03;   // cho phép vào sát Cần Thơ
     controls.maxDistance = dist * 1.9;
     setDepthRange(camera.position.length());

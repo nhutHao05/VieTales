@@ -8,6 +8,7 @@
 import { initNavigation } from './navigation.js';
 import { initScrollAnimations, initParallax, initCardTilt } from './animations.js';
 import { initBackgroundAudio } from './audio-control.js';
+import { initAtlasMode } from './atlas-mode.js';
 /* Hai module Three.js bên dưới được nạp động (dynamic import) ở phần khởi tạo.
    Lý do: three.js nặng ~600 kB nên nếu import tĩnh ở đây thì mọi lượt tải
    trang đều phải chờ nó, kể cả khi WebGL không dùng được. Nạp động giúp
@@ -51,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initTypingEffect();
   initCounterAnimation();
 
+  initAtlasMode();
+  initIllustratedMap();
   initThreeD();
 
   console.log('🇻🇳 VieTales - Gửi Gắm Chuyện Việt Qua Từng Tấm Bưu Thiếp');
@@ -60,16 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
    Nạp động: chunk three.js chỉ được tải khi trang có phần tử cần đến nó,
    và bị bỏ qua hoàn toàn nếu trình duyệt không dựng được WebGL. */
 async function initThreeD() {
-  const mapStage = document.getElementById('map3d-stage');
   const cardStage = document.getElementById('postcard3d-stage');
 
-  if (!mapStage && !cardStage) return;
+  if (!cardStage) return;
 
   const probe = document.createElement('canvas');
   const gl = probe.getContext('webgl2') || probe.getContext('webgl');
   if (!gl) {
     console.warn('Trình duyệt không hỗ trợ WebGL — bỏ qua phần 3D.');
-    mapStage?.classList.add('map3d-failed');
     document.getElementById('postcard3d')?.classList.add('postcard3d-failed');
     return;
   }
@@ -84,14 +85,18 @@ async function initThreeD() {
     }
   }
 
-  if (mapStage) {
-    try {
-      const { initVietnamMap } = await import('./map3d.js');
-      await initVietnamMap(mapStage);
-    } catch (err) {
-      console.error('Bản đồ 3D lỗi:', err);
-      mapStage.classList.add('map3d-failed');
-    }
+}
+
+// SVG map works independently of WebGL and the postcard's Three.js chunk.
+async function initIllustratedMap() {
+  const stage = document.getElementById('heritage-map');
+  if (!stage) return;
+  try {
+    const { initHeritageMap } = await import('./heritage-map.js');
+    await initHeritageMap(stage);
+  } catch (error) {
+    stage.querySelector('[role="status"]').textContent = 'Chưa tải được bản đồ. Bạn vẫn có thể mở câu chuyện ở danh sách bên cạnh.';
+    console.warn('Bản đồ minh họa:', error);
   }
 }
 

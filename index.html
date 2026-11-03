@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
+<script src="/audio/start.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <!-- SEO Meta Tags -->
@@ -334,36 +335,46 @@
         <!-- Location cards populated by JS -->
       </div>
 
-      <!-- ========== BẢN ĐỒ 3D ========== -->
-      <div class="map3d-block reveal" id="map3d-block">
-        <div class="map3d-frame">
-          <div class="map3d-stage" id="map3d-stage">
-            <div class="map3d-overlay">
-              <span class="map3d-kicker">
-                <span class="map3d-dot"></span>
-                Bản đồ 3D
-              </span>
-              <h3 class="map3d-title">Ba địa điểm, một miền Tây</h3>
-              <p class="map3d-note">
-                Cả ba di tích đều nằm ở phường Bình Thủy, Cần Thơ. Kéo để xoay, cuộn để
-                phóng, bấm vào điểm đỏ để mở câu chuyện.
-              </p>
-              <p class="map3d-disclaimer">
-                Khoảng cách giữa ba điểm đã được phóng đại để tách rời nhau trên bản đồ —
-                thực tế chúng chỉ cách nhau 1–2 km.
-              </p>
-            </div>
-            <div class="map3d-legend">
-              <span class="map3d-dot"></span>
-              <span>Bình Thủy, Cần Thơ — 3 bưu thiếp</span>
-            </div>
-            <button type="button" class="map3d-zoom" id="map3d-zoom" aria-pressed="false">
-              Zoom Cần Thơ
-            </button>
-            <div class="map3d-hint">Kéo để xoay · Cuộn để phóng</div>
+      <!-- ========== BẢN ĐỒ CHUYỆN VIỆT ========== -->
+      <section class="atlas reveal" aria-labelledby="atlas-title">
+        <div class="atlas-top">
+          <div><p class="atlas-eyebrow">DỌC MIỀN CHUYỆN VIỆT</p><h3 id="atlas-title">Một bản đồ, muôn điều để kể.</h3></div>
+          <div class="atlas-controls">
+          <div class="atlas-switch atlas-mode-switch" role="group" aria-label="Kiểu bản đồ">
+            <button type="button" data-map-mode="2d" aria-pressed="true" aria-controls="heritage-map">Bản đồ 2D</button>
+            <button type="button" data-map-mode="3d" aria-pressed="false" aria-controls="atlas-3d">Bản đồ 3D</button>
+          </div>
+          <div class="atlas-switch" id="atlas-region-controls" role="group" aria-label="Vùng bản đồ">
+            <button type="button" data-map-view="country" aria-pressed="true">Toàn Việt Nam</button>
+            <button type="button" data-map-view="delta" aria-pressed="false">Về miền Tây</button>
+          </div>
           </div>
         </div>
-      </div>
+        <div class="atlas-layout">
+          <div class="atlas-viewport">
+          <div class="atlas-map" id="heritage-map">
+            <p class="atlas-status" role="status">Đang mở bản đồ chuyện Việt…</p>
+          </div>
+          <div class="atlas-3d" id="atlas-3d" hidden>
+            <div class="atlas-3d-stage" id="map3d-stage"></div>
+            <button type="button" class="atlas-3d-zoom" id="map3d-zoom" aria-pressed="false">Zoom Cần Thơ</button>
+            <p class="atlas-3d-status" role="status">Kéo để xoay · Cuộn hoặc chụm để phóng</p>
+          </div>
+          </div>
+          <aside class="atlas-journal" aria-label="Các điểm dừng VieTales">
+            <p class="atlas-eyebrow">BÌNH THỦY · CẦN THƠ</p>
+            <h4>Ba điểm dừng.<br>Một miền ký ức.</h4>
+            <p class="atlas-intro">Theo dấu những tấm bưu thiếp, chạm vào câu chuyện của một miền đất.</p>
+            <nav class="atlas-stops" aria-label="Mở câu chuyện địa điểm">
+              <a href="/locations/den-hung.html" data-atlas-site="0"><span class="atlas-number">01</span><img src="/images/den-hung-card.webp" alt="" width="72" height="80" loading="lazy"><span><small>CỘI NGUỒN</small><strong>Đền Thờ Vua Hùng</strong></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+              <a href="/locations/nam-nha.html" data-atlas-site="1"><span class="atlas-number">02</span><img src="/images/nam-nha-card.webp" alt="" width="72" height="80" loading="lazy"><span><small>DẤU XƯA</small><strong>Chùa Nam Nhã</strong></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+              <a href="/locations/bui-huu-nghia.html" data-atlas-site="2"><span class="atlas-number">03</span><img src="/images/bui-huu-nghia-card.webp" alt="" width="72" height="80" loading="lazy"><span><small>KHÍ TIẾT</small><strong>Khu Tưởng Niệm<br>Bùi Hữu Nghĩa</strong></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+            </nav>
+            <div class="atlas-journal-note"><span aria-hidden="true">03</span><p>Tấm bưu thiếp nhỏ.<br>Hành trình khám phá lớn.</p></div>
+          </aside>
+        </div>
+        <p class="atlas-footnote">Bản đồ minh họa, không dùng để chỉ đường. Vị trí các marker được giãn để dễ chọn; các khung quần đảo là sơ đồ không theo tỉ lệ.</p>
+      </section>
     </div>
   </section>
 

@@ -9,9 +9,12 @@ export function initBackgroundAudio() {
     desired = sessionStorage.getItem(KEY) !== 'off';
     savedTime = Number(sessionStorage.getItem(KEY + ':time')) || 0;
   } catch {}
-  const audio = document.createElement('audio');
+  const earlyAudio = document.getElementById('site-audio');
+  const audio = earlyAudio || document.createElement('audio');
+  window.__vietalesEarlyAudioCleanup?.();
   audio.id = 'site-audio';
-  audio.src = '/audio/guzheng-city.mp3';
+  if (!earlyAudio) audio.src = '/audio/guzheng-city.mp3';
+  else savedTime = 0; // The early starter restores position; do not seek twice.
   audio.loop = true;
   audio.preload = 'auto';
   audio.volume = 0.35;
@@ -28,7 +31,8 @@ export function initBackgroundAudio() {
         <path d="M19 12a6 6 0 0 1 0 8M23 9a10 10 0 0 1 0 14"/></g>
       <path class="music-cross" d="m20 13 7 6m0-6-7 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
     </svg><span class="audio-tip" role="status"></span>`;
-  document.body.append(audio, button);
+  if (!earlyAudio) document.body.appendChild(audio);
+  document.body.appendChild(button);
   const tip = button.querySelector('.audio-tip');
   let timer;
   let request = 0;
