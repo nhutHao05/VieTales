@@ -94,29 +94,12 @@
   100% { opacity: 0; transform: scale(1.5); }
 }
 
-/* Keep playback infrastructure outside the visible interface: speaker only. */
-.music-panel {
-  position: fixed;
-  left: -10000px;
-  top: 0;
-  pointer-events: none;
-  width: 280px;
-  max-width: calc(100vw - 28px);
-  background: #fffaf3;
-  border: 1px solid #e3d6c6;
-  border-radius: 14px;
-  box-shadow: 0 8px 32px #0002;
-  color: #3a2e22;
-  font: 12px/1.5 var(--font-primary, sans-serif);
-}
-.music-panel[hidden] { display: none; }
-.music-panel iframe { display: block; width: 100%; height: 200px; border: 0; }
-.music-panel-heading {
-  display: flex; justify-content: space-between; gap: 8px;
-  padding: 10px 12px;
-}
-.music-panel-heading a { color: #b43c31; text-decoration: underline; }
-.music-status { margin: 0; padding: 10px 12px; }
+/* Required attribution for the bundled CC BY 4.0 music. */
+.music-credit { font-size: .68rem; line-height: 1.6; margin: 16px 0 0; }
+.music-credit a { text-decoration: underline; }
+.heritage-footer { flex-wrap: wrap; }
+.heritage-footer .music-credit { flex-basis: 100%; }
+.audio-toggle { right: max(14px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); }
 .audio-toggle .music-waves { display: none; }
 .audio-toggle.is-playing .music-waves { display: inline; }
 .audio-toggle.is-playing .music-cross { display: none; }

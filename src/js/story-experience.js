@@ -16,7 +16,7 @@ for (const stage of document.querySelectorAll('[data-inline-model]')) {
       if (destroyed) { next.dispose(); return; }
       viewer = next;
       stage.classList.add('has-display');
-      status.textContent = 'Trống đồng Đông Sơn 3D';
+      status.textContent = 'Trống Đồng';
     } catch (error) {
       if (!destroyed) {
         stage.classList.add('model-failed');

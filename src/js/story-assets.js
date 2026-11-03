@@ -8,8 +8,8 @@ export const storyAssets = {
     },
     {
       "src": "/images/story/dong-son-drum-poster.webp",
-      "label": "Trống đồng",
-      "caption": "Trống đồng Đông Sơn"
+      "label": "Trống Đồng",
+      "caption": "Trống Đồng"
     },
     {
       "src": "/images/story/den-hung-tuong.webp",
