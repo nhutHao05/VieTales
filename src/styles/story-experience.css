@@ -17,7 +17,8 @@
 .heritage-tags span { font-size:.66rem; border:1px solid #d4c6af; padding:5px 9px; border-radius:30px; color:#766b59; }
 .heritage-enter { display:inline-flex; align-items:center; gap:30px; padding:12px 20px; border:1px solid #75392e; border-radius:6px; background:var(--journal-red); color:#fff9ef; font-size:.85rem; box-shadow:3px 3px 0 #63372c; transition:transform .2s; }
 .heritage-enter:hover { transform:translateY(-3px); }
-.heritage-enter span { font-size:1.3rem; }
+.heritage-arrow { display:block; width:20px; height:20px; flex:0 0 20px; }
+.heritage-next .heritage-arrow { margin-top:.3em; }
 .heritage-collage { position:relative; padding:38px 12px 90px; min-width:0; }
 .heritage-collage::before { content:''; position:absolute; inset:5% 0 10% 8%; background:#d8dccb; transform:rotate(-5deg); border-radius:4px; border:1px solid #c0c4b3; }
 .heritage-collage::after { content:''; position:absolute; width:90px; height:29px; top:27px; left:42%; background:#dbbf7eaa; transform:rotate(-9deg); z-index:3; box-shadow:0 1px 2px #0001; }
