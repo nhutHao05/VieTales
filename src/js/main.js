@@ -7,6 +7,7 @@
 // Import modules
 import { initNavigation } from './navigation.js';
 import { initScrollAnimations, initParallax, initCardTilt } from './animations.js';
+import { initBackgroundAudio } from './audio-control.js';
 /* Hai module Three.js bên dưới được nạp động (dynamic import) ở phần khởi tạo.
    Lý do: three.js nặng ~600 kB nên nếu import tĩnh ở đây thì mọi lượt tải
    trang đều phải chờ nó, kể cả khi WebGL không dùng được. Nạp động giúp
@@ -42,6 +43,7 @@ const locations = [
 
 // === Initialize App ===
 document.addEventListener('DOMContentLoaded', () => {
+  initBackgroundAudio();
   initNavigation();
   initScrollAnimations();
   initParallax();
